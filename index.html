@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VÉLORA — حيث تبدأ الأناقة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #faf7f2; color: #2c2c2c; font-family: 'Cairo', sans-serif; line-height: 1.7; overflow-x: hidden; }
+
+nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 6%; background: rgba(250,247,242,0.97); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(184,147,90,0.15); }
+nav .logo { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 600; letter-spacing: 8px; color: #8b6f47; cursor: pointer; padding-right: 8px; }
+nav .nav-actions { display: flex; align-items: center; gap: 20px; }
+nav .icon-btn { background: none; border: none; font-size: 22px; cursor: pointer; color: #2c2c2c; position: relative; transition: 0.3s; padding: 5px; }
+nav .icon-btn:hover { color: #8b6f47; }
+.cart-count { position: absolute; top: -2px; left: -2px; background: #8b6f47; color: #fff; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-weight: 700; }
+.cart-count.show { display: flex; }
+
+.hero { min-height: 85vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 80px 20px; background: linear-gradient(135deg, #faf7f2 0%, #f5e6d3 100%); }
+.hero-content { position: relative; z-index: 2; }
+.hero .stars { color: #b8935a; font-size: 14px; letter-spacing: 8px; margin-bottom: 20px; }
+.hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 5.5rem; font-weight: 500; letter-spacing: 22px; color: #8b6f47; margin-bottom: 25px; padding-right: 22px; }
+.hero .line { width: 60px; height: 1px; background: #b8935a; margin: 0 auto 25px; }
+.hero .tagline { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: #6b6b6b; margin-bottom: 45px; letter-spacing: 3px; }
+.hero .btn { display: inline-block; padding: 18px 55px; background: #8b6f47; color: #fff; text-decoration: none; font-size: 14px; letter-spacing: 5px; font-weight: 500; transition: 0.4s; border: 1px solid #8b6f47; cursor: pointer; font-family: 'Cairo', sans-serif; }
+.hero .btn:hover { background: transparent; color: #8b6f47; }
+
+.section-header { text-align: center; margin-bottom: 60px; }
+.section-header .mini-title { color: #b8935a; font-size: 12px; letter-spacing: 6px; margin-bottom: 15px; font-weight: 600; }
+.section-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 500; color: #8b6f47; letter-spacing: 8px; margin-bottom: 15px; padding-right: 8px; }
+.section-header .divider { width: 80px; height: 1px; background: #b8935a; margin: 0 auto 20px; }
+.section-header .desc { color: #8a8a8a; font-size: 14px; }
+
+.categories-section { padding: 100px 6%; background: #faf7f2; }
+.categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
+.category-card { position: relative; height: 340px; overflow: hidden; cursor: pointer; background: #fff; border: 1px solid rgba(184,147,90,0.15); transition: 0.5s; }
+.category-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(139,111,71,0.25); border-color: #b8935a; }
+.category-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; }
+.category-card:hover img { transform: scale(1.1); }
+.category-card .overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,24,21,0.85) 0%, rgba(26,24,21,0.1) 50%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 35px 20px; text-align: center; }
+.category-card .overlay h3 { font-family: 'Cormorant Garamond', serif; color: #fff; font-size: 2rem; letter-spacing: 6px; font-weight: 500; margin-bottom: 8px; }
+.category-card .overlay .count { color: #d4b88a; font-size: 13px; letter-spacing: 2px; }
+.products-section { display: none; padding: 80px 6%; background: #faf7f2; min-height: 70vh; }
+.products-section.active { display: block; }
+.back-btn { display: inline-block; background: none; border: 1px solid #8b6f47; color: #8b6f47; padding: 10px 25px; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 13px; letter-spacing: 2px; margin-bottom: 40px; transition: 0.3s; }
+.back-btn:hover { background: #8b6f47; color: #fff; }
+.products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 35px; max-width: 1200px; margin: 0 auto; }
+.product { background: #fff; overflow: hidden; transition: 0.5s; border: 1px solid rgba(184,147,90,0.1); }
+.product:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(139,111,71,0.2); border-color: #b8935a; }
+.product-img-wrap { position: relative; overflow: hidden; background: #faf7f2; height: 320px; display: flex; align-items: center; justify-content: center; padding: 15px; }
+.product img { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.7s; cursor: zoom-in; }
+.product:hover img { transform: scale(1.08); }
+.product .info { padding: 22px 20px; text-align: center; }
+.product h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 6px; color: #2c2c2c; }
+.product .price { color: #8b6f47; font-size: 1.2rem; font-weight: 700; margin-bottom: 18px; }
+.product .price::after { content: ' ج.م'; font-size: 0.8rem; color: #8a8a8a; font-weight: 400; }
+.product .actions { display: flex; gap: 8px; justify-content: center; }
+.product .add-cart-btn { flex: 1; padding: 10px 15px; background: transparent; color: #8b6f47; border: 1px solid #8b6f47; font-family: 'Cairo', sans-serif; font-size: 12px; letter-spacing: 1px; cursor: pointer; transition: 0.3s; font-weight: 600; }
+.product .add-cart-btn:hover { background: #8b6f47; color: #fff; }
+.product .wa-btn { padding: 10px 15px; background: #25D366; color: #fff; border: none; cursor: pointer; font-size: 16px; transition: 0.3s; display: flex; align-items: center; justify-content: center; text-decoration: none; }
+.product .wa-btn:hover { background: #1da851; }
+
+.about { background: #1a1815; text-align: center; padding: 110px 6%; color: #fff; }
+.about .mini-title { color: #d4b88a; font-size: 12px; letter-spacing: 6px; margin-bottom: 15px; font-weight: 600; }
+.about h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 500; letter-spacing: 8px; margin-bottom: 25px; padding-right: 8px; }
+.about .divider { width: 80px; height: 1px; background: #b8935a; margin: 0 auto 30px; }
+.about p { max-width: 700px; margin: 0 auto; color: #ccc; font-size: 1rem; line-height: 2.1; font-weight: 300; }
+
+footer { background: #0f0e0c; color: #888; text-align: center; padding: 50px 6% 30px; }
+footer .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 2rem; letter-spacing: 12px; color: #d4b88a; margin-bottom: 15px; padding-right: 12px; }
+footer .divider { width: 40px; height: 1px; background: #b8935a; margin: 0 auto 20px; }
+footer p { font-size: 13px; letter-spacing: 1px; }
+.whatsapp-float { position: fixed; bottom: 30px; left: 30px; width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 30px; text-decoration: none; box-shadow: 0 8px 30px rgba(37,211,102,0.5); z-index: 999; transition: 0.4s; }
+.whatsapp-float:hover { transform: scale(1.15); }
+.lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,10,10,0.95); z-index: 9999; justify-content: center; align-items: center; padding: 40px; cursor: zoom-out; }
+.lightbox.active { display: flex; }
+.lightbox img { max-width: 95%; max-height: 90%; object-fit: contain; }
+.lightbox .close-btn { position: absolute; top: 25px; right: 35px; font-size: 45px; color: #fff; cursor: pointer; background: none; border: none; line-height: 1; }
+.lightbox .close-btn:hover { color: #b8935a; }
+
+.cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; opacity: 0; visibility: hidden; transition: 0.3s; }
+.cart-overlay.active { opacity: 1; visibility: visible; }
+.cart-sidebar { position: fixed; top: 0; left: -420px; width: 400px; max-width: 90%; height: 100%; background: #fff; z-index: 1001; transition: left 0.4s; display: flex; flex-direction: column; box-shadow: 0 0 60px rgba(0,0,0,0.3); }
+.cart-sidebar.active { left: 0; }
+.cart-header { padding: 25px 25px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+.cart-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: #8b6f47; letter-spacing: 3px; font-weight: 500; }
+.cart-header .close-cart { background: none; border: none; font-size: 28px; cursor: pointer; color: #999; }
+.cart-items { flex: 1; overflow-y: auto; padding: 20px 25px; }
+.cart-empty { text-align: center; padding: 60px 20px; color: #8a8a8a; }
+.cart-empty .big-icon { font-size: 60px; margin-bottom: 15px; opacity: 0.3; }
+.cart-item { display: flex; gap: 15px; padding: 15px 0; border-bottom: 1px solid #f0f0f0; align-items: center; }
+.cart-item img { width: 70px; height: 70px; object-fit: contain; background: #faf7f2; padding: 5px; }
+.cart-item .details { flex: 1; }
+.cart-item .details h4 { font-size: 0.95rem; margin-bottom: 4px; color: #2c2c2c; }
+.cart-item .details .item-price { color: #8b6f47; font-weight: 700; font-size: 0.95rem; }
+.cart-item .remove-btn { background: none; border: none; color: #d9534f; cursor: pointer; font-size: 18px; padding: 5px; }
+.cart-footer { padding: 20px 25px 25px; border-top: 1px solid #eee; background: #faf7f2; }
+.cart-total { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 1.1rem; }
+.cart-total span:last-child { color: #8b6f47; font-weight: 700; }
+.checkout-btn { width: 100%; padding: 15px; background: #25D366; color: #fff; border: none; font-family: 'Cairo', sans-serif; font-size: 15px; letter-spacing: 2px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+.checkout-btn:hover { background: #1da851; }
+
+.search-overlay { position: fixed; inset: 0; background: rgba(250,247,242,0.98); z-index: 2000; display: none; padding: 60px 6%; overflow-y: auto; }
+.search-overlay.active { display: block; }
+.search-box { max-width: 700px; margin: 0 auto; position: relative; }
+.search-box input { width: 100%; padding: 25px 60px 25px 20px; font-size: 20px; font-family: 'Cairo', sans-serif; border: none; border-bottom: 2px solid #8b6f47; background: transparent; outline: none; color: #2c2c2c; }
+.search-box .close-search { position: absolute; top: 50%; left: 0; transform: translateY(-50%); background: none; border: none; font-size: 30px; cursor: pointer; color: #999; }
+.search-results { max-width: 1100px; margin: 50px auto 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; }
+.search-results .no-results { grid-column: 1/-1; text-align: center; color: #8a8a8a; padding: 40px; font-size: 16px; }
+
+.toast { position: fixed; top: 100px; left: 50%; transform: translateX(-50%); background: #8b6f47; color: #fff; padding: 14px 30px; font-family: 'Cairo', sans-serif; font-size: 14px; z-index: 99999; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+@media (max-width: 768px) {
+  nav { padding: 14px 5%; }
+  nav .logo { font-size: 22px; letter-spacing: 5px; }
+  nav .icon-btn { font-size: 20px; }
+  nav .nav-actions { gap: 12px; }
+  .hero h1 { font-size: 3.2rem; letter-spacing: 12px; padding-right: 12px; }
+  .hero .tagline { font-size: 1.1rem; letter-spacing: 1px; }
+  .section-header h2 { font-size: 1.9rem; letter-spacing: 5px; }
+  .about h2 { font-size: 1.9rem; letter-spacing: 5px; }
+  .categories-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .category-card { height: 200px; }
+  .category-card .overlay h3 { font-size: 1.3rem; letter-spacing: 3px; }
+  .category-card .overlay .count { font-size: 11px; }
+  .products-grid { grid-template-columns: 1fr 1fr; gap: 15px; }
+  .product-img-wrap { height: 200px; padding: 8px; }
+  .product .info { padding: 15px 10px; }
+  .product h3 { font-size: 0.9rem; }
+  .product .price { font-size: 1rem; margin-bottom: 12px; }
+  .product .actions { flex-direction: column; gap: 5px; }
+  .product .add-cart-btn { font-size: 11px; padding: 8px; }
+  .product .wa-btn { padding: 8px; }
+  .whatsapp-float { width: 52px; height: 52px; font-size: 24px; bottom: 20px; left: 20px; }
+  .cart-sidebar { width: 100%; max-width: 100%; left: -100%; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo" onclick="goHome()">VÉLORA</div>
+  <div class="nav-actions">
+    <button class="icon-btn" onclick="openSearch()">🔍</button>
+    <button class="icon-btn" onclick="openCart()">
+      🛒
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</nav>
+
+<div id="mainView">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="stars">✦ ✦ ✦</div>
+      <h1>VÉLORA</h1>
+      <div class="line"></div>
+      <p class="tagline">حيث تبدأ الأناقة</p>
+      <button class="btn" onclick="scrollToCategories()">ابدأ التسوق</button>
+    </div>
+  </div>
+
+  <section class="categories-section" id="categoriesSection">
+    <div class="section-header">
+      <p class="mini-title">COLLECTIONS</p>
+      <h2>تصنيفاتنا</h2>
+      <div class="divider"></div>
+      <p class="desc">اختاري القسم اللي يناسبك</p>
+    </div>
+    <div class="categories-grid" id="categoriesGrid"></div>
+  </section>
+
+  <section class="about">
+    <p class="mini-title">OUR STORY</p>
+    <h2>عن VÉLORA</h2>
+    <div class="divider"></div>
+    <p>VÉLORA علامة تجارية تقدم إكسسوارات مختارة بعناية، بتجمع بين الأناقة والبساطة. كل قطعة عندنا مصنوعة بخامات عالية الجودة، عشان تفضل معاكي لفترة طويلة.</p>
+  </section>
+</div>
+
+<section class="products-section" id="productsSection">
+  <button class="back-btn" onclick="goHome()">← رجوع للتصنيفات</button>
+  <div class="section-header">
+    <p class="mini-title" id="catMiniTitle">CATEGORY</p>
+    <h2 id="catTitle">منتجاتنا</h2>
+    <div class="divider"></div>
+    <p class="desc" id="catDesc"></p>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<footer>
+  <div class="footer-logo">VÉLORA</div>
+  <div class="divider"></div>
+  <p>© 2025 VÉLORA — جميع الحقوق محفوظة</p>
+</footer>
+
+<a href="https://wa.me/201007301622" class="whatsapp-float" target="_blank">💬</a>
+<div class="lightbox" id="lightbox">
+  <button class="close-btn" id="closeLightbox">×</button>
+  <img src="" alt="" id="lightboxImage">
+</div>
+
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h2>السلة</h2>
+    <button class="close-cart" onclick="closeCart()">×</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total">
+      <span>الإجمالي:</span>
+      <span id="cartTotal">0 ج.م</span>
+    </div>
+    <button class="checkout-btn" onclick="checkoutWhatsApp()">💬 إتمام الطلب على واتساب</button>
+  </div>
+</div>
+
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="ابحثي عن منتج..." oninput="performSearch()">
+    <button class="close-search" onclick="closeSearch()">×</button>
+  </div>
+  <div class="search-results" id="searchResults"></div>
+</div>
+
+<script>
+var WHATSAPP_NUMBER = "201007301622";
+
+var categories = [
+  { id: "rings", name: "خواتم", miniTitle: "RINGS", desc: "خواتم أنيقة لكل إطلالة", image: "https://i.ibb.co/q3hyNxDG/IMG-20260911-WA0085.jpg" },
+  { id: "necklaces", name: "سلاسل", miniTitle: "NECKLACES", desc: "سلاسل ناعمة بتفاصيل مميزة", image: "https://i.ibb.co/1f3FY68m/IMG-20260923-175553-418.jpg" },
+  { id: "earrings", name: "حلقان", miniTitle: "EARRINGS", desc: "حلقان بتصاميم عصرية", image: "https://i.ibb.co/kPRbXt8/IMG-20260923-184123-195.jpg" },
+  { id: "anklets", name: "انسيالات", miniTitle: "ANKLETS", desc: "انسيالات بلمسة أنثوية", image: "https://i.ibb.co/whZbBS4Z/IMG-20260923-184722-826.jpg" },
+  { id: "watches", name: "ساعات يد", miniTitle: "WATCHES", desc: "ساعات يد بتصاميم راقية", image: "https://i.ibb.co/Tp0Z3HH/IMG-20260923-162254-873.jpg" },
+  { id: "combo", name: "كومبو", miniTitle: "COMBO", desc: "أطقم كاملة بتنسيق مميز", image: "https://i.ibb.co/QGFMG8Q/IMG-20260923-184134-774.jpg" }
+];
+
+var products = [
+  { id: 1, name: "سلسلة استالس", price: 100, category: "necklaces", image: "https://i.ibb.co/M5y6sDBZ/IMG-20260921-164946-133.jpg" },
+  { id: 2, name: "كومبو انسيال مع سلسله", price: 140, category: "combo", image: "https://i.ibb.co/nsZ9rmFH/IMG-20260923-170843-055.jpg" },
+  { id: 3, name: "ساعه مع انسيال", price: 310, category: "watches", image: "https://i.ibb.co/Pz4rR8nm/IMG-20260923-163059-043.jpg" },
+{ id: 4, name: "ساعه", price: 220, category: "watches", image: "https://i.ibb.co/vCXmvrk8/IMG-20260923-163601-047.jpg" },
+{ id: 5, name: "ساعه مع انسيال", price: 275, category: "watches", image: "https://i.ibb.co/wZsFqhzf/IMG-20260923-163644-838.jpg" },
+{ id: 6, name: "ساعه مع انسيال", price: 290, category: "watches", image: "https://i.ibb.co/0ysQwrc2/IMG-20260923-163622-866.jpg" },
+
+  { id: 7, name: "كوبو انسيالات", price: 145, category: "combo", image: "https://i.ibb.co/rfQTQtp0/IMG-20260923-171211-943.jpg" },
+  { id: 8, name: "خاتم اميرة الدهب", price: 95, category: "rings", image: "https://i.ibb.co/C3TbZ5Lx/IMG-20260923-175944-452.jpg" },
+  { id: 9, name: "كومبو سلاسل", price: 165, category: "combo", image: "https://i.ibb.co/ytHVZQ7/IMG-20260923-170917-027.jpg" },
+{ id: 10, name: "خاتم انت عمري استالس بيور", price: 55, category: "rings", image: "https://i.ibb.co/HpXR1Y4S/IMG-20260923-170906-717.jpg" },
+{ id: 11, name: "كومبو", price: 145, category: "combo", image: "https://i.ibb.co/rRD8sZtg/IMG-20260923-170926-031.jpg" },
+{ id: 12, name: "خاتم ورده استالس بيور", price: 55, category: "rings", image: "https://i.ibb.co/Gvw0cs17/IMG-20260923-170959-430.jpg" },
+{ id: 13, name: "خاتم جولد بليتد اي خاتم ب", price: 50, category: "rings", image: "https://i.ibb.co/MysdDFcd/IMG-20260923-171052-338.jpg" },
+{ id: 14, name: "سلسلة ", price: 70, category: "necklaces", image: "https://i.ibb.co/93t0j2QX/IMG-20260923-175727-341.jpg" },
+{ id: 15, name: "انسيال بلغاري دبل فيس  ", price: 100, category: "anklets", image: "https://i.ibb.co/qL6PMrsN/IMG-20260923-171133-808.jpg" },
+{ id: 16, name: "انسيال قلب دبل فيس  ", price: 110, category: "anklets", image: "https://i.ibb.co/8nrSY2mv/IMG-20260923-171137-611.jpg" },
+{ id: 17, name: "خاتم نسائي الاربعه ", price: 175, category: "rings", image: "https://i.ibb.co/hF5mfcCd/IMG-20260923-184752-078.jpg" },
+{ id: 18, name: "حلق", price: 110, category: "earrings", image: "https://i.ibb.co/kPRbXt8/IMG-20260923-184123-195.jpg" },
+{ id: 19, name: " حلق", price: 140, category: "earrings", image: "https://i.ibb.co/yB5b23k4/IMG-20260923-184654-670.jpg" },
+
+{ id: 20, name: "خاتم جولد بليتد", price: 110, category: "rings", image: "https://i.ibb.co/0y4cXBmc/IMG-20260923-184139-458.jpg" },
+{ id: 21, name: " حلق استالس بيور", price: 70, category: "earrings", image: "https://i.ibb.co/8LMmqMcZ/IMG-20260923-175706-426.jpg" },
+{ id: 22, name: "سلسله جولد بليتد", price: 100, category: "necklaces", image: "https://i.ibb.co/tMD4SyNb/IMG-20260923-190543-855.jpg" }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+];
+
+var cart = [];
+try {
+  var saved = localStorage.getItem('velora_cart');
+  if (saved) cart = JSON.parse(saved);
+} catch(e) { cart = []; }
+
+function saveCart() {
+  localStorage.setItem('velora_cart', JSON.stringify(cart));
+  updateCartCount();
+}
+
+function addToCart(productId) {
+  var product = null;
+  for (var i = 0; i < products.length; i++) {
+    if (products[i].id === productId) { product = products[i]; break; }
+  }
+  if (!product) return;
+  var existing = null;
+  for (var j = 0; j < cart.length; j++) {
+    if (cart[j].id === productId) { existing = cart[j]; break; }
+  }
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ id: product.id, name: product.name, price: product.price, image: product.image, qty: 1 });
+  }
+  saveCart();
+  showToast('✅ تم الإضافة للسلة');
+}
+
+function removeFromCart(productId) {
+  cart = cart.filter(function(item) { return item.id !== productId; });
+  saveCart();
+  renderCart();
+}
+function updateCartCount() {
+  var count = 0;
+  for (var i = 0; i < cart.length; i++) count += cart[i].qty;
+  var badge = document.getElementById('cartCount');
+  if (count > 0) {
+    badge.textContent = count;
+    badge.classList.add('show');
+  } else {
+    badge.classList.remove('show');
+  }
+}
+
+function openCart() {
+  document.getElementById('cartSidebar').classList.add('active');
+  document.getElementById('cartOverlay').classList.add('active');
+  renderCart();
+}
+
+function closeCart() {
+  document.getElementById('cartSidebar').classList.remove('active');
+  document.getElementById('cartOverlay').classList.remove('active');
+}
+
+function renderCart() {
+  var itemsEl = document.getElementById('cartItems');
+  var footerEl = document.getElementById('cartFooter');
+  if (cart.length === 0) {
+    itemsEl.innerHTML = '<div class="cart-empty"><div class="big-icon">🛒</div><p>السلة فاضية</p><p style="font-size:13px; margin-top:8px;">ابدئي بإضافة منتجات</p></div>';
+    footerEl.style.display = 'none';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < cart.length; i++) {
+    var item = cart[i];
+    html += '<div class="cart-item">';
+    html += '<img src="' + item.image + '" alt="' + item.name + '">';
+    html += '<div class="details"><h4>' + item.name + '</h4>';
+    html += '<p class="item-price">' + item.price + ' ج.م × ' + item.qty + '</p></div>';
+    html += '<button class="remove-btn" onclick="removeFromCart(' + item.id + ')">🗑️</button>';
+    html += '</div>';
+  }
+  itemsEl.innerHTML = html;
+  var total = 0;
+  for (var k = 0; k < cart.length; k++) total += cart[k].price * cart[k].qty;
+  document.getElementById('cartTotal').textContent = total + ' ج.م';
+  footerEl.style.display = 'block';
+}
+
+function checkoutWhatsApp() {
+  if (cart.length === 0) return;
+  var message = 'مرحباً VÉLORA،\nعايزة أطلب:\n\n';
+  for (var i = 0; i < cart.length; i++) {
+    message += '▪️ ' + cart[i].name + ' — ' + cart[i].price + ' ج.م × ' + cart[i].qty + '\n';
+    message += '🖼️ ' + cart[i].image + '\n\n';
+  }
+  var total = 0;
+  for (var j = 0; j < cart.length; j++) total += cart[j].price * cart[j].qty;
+  message += 'الإجمالي: ' + total + ' ج.م';
+  window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message), '_blank');
+}
+function renderCategories() {
+  var grid = document.getElementById('categoriesGrid');
+  var html = '';
+  for (var i = 0; i < categories.length; i++) {
+    var cat = categories[i];
+    var count = 0;
+    for (var j = 0; j < products.length; j++) {
+      if (products[j].category === cat.id) count++;
+    }
+    html += '<div class="category-card" onclick="openCategory(\'' + cat.id + '\')">';
+    html += '<img src="' + cat.image + '" alt="' + cat.name + '">';
+    html += '<div class="overlay">';
+    html += '<h3>' + cat.name + '</h3>';
+    html += '<p class="count">' + count + ' منتج</p>';
+    html += '</div></div>';
+  }
+  grid.innerHTML = html;
+}
+
+function openCategory(catId) {
+  var cat = null;
+  for (var i = 0; i < categories.length; i++) {
+    if (categories[i].id === catId) { cat = categories[i]; break; }
+  }
+  if (!cat) return;
+  document.getElementById('mainView').style.display = 'none';
+  document.getElementById('productsSection').classList.add('active');
+  document.getElementById('catMiniTitle').textContent = cat.miniTitle;
+  document.getElementById('catTitle').textContent = cat.name;
+  document.getElementById('catDesc').textContent = cat.desc;
+  var filtered = [];
+  for (var j = 0; j < products.length; j++) {
+    if (products[j].category === catId) filtered.push(products[j]);
+  }
+  renderProducts(filtered);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function renderProducts(list) {
+  var grid = document.getElementById('productsGrid');
+  if (list.length === 0) {
+    grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:#999; padding:40px;">لا توجد منتجات في هذا القسم حالياً</p>';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < list.length; i++) {
+    var p = list[i];
+    var waMsg = encodeURIComponent('مرحباً VÉLORA،\nعايزة أستفسر عن: ' + p.name + '\nالسعر: ' + p.price + ' ج');
+    html += '<div class="product">';
+    html += '<div class="product-img-wrap"><img src="' + p.image + '" alt="' + p.name + '" onclick="openLightbox(this.src)"></div>';
+    html += '<div class="info">';
+    html += '<h3>' + p.name + '</h3>';
+    html += '<p class="price">' + p.price + '</p>';
+    html += '<div class="actions">';
+    html += '<button class="add-cart-btn" onclick="addToCart(' + p.id + ')">أضيفي للسلة</button>';
+    html += '<a class="wa-btn" href="https://wa.me/' + WHATSAPP_NUMBER + '?text=' + waMsg + '" target="_blank">💬</a>';
+    html += '</div></div></div>';
+  }
+  grid.innerHTML = html;
+}
+
+function goHome() {
+  document.getElementById('productsSection').classList.remove('active');
+  document.getElementById('mainView').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function scrollToCategories() {
+  document.getElementById('categoriesSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+function openLightbox(src) {
+  document.getElementById('lightboxImage').src = src;
+  document.getElementById('lightbox').classList.add('active');
+}
+
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target.id === 'lightbox') {
+    this.classList.remove('active');
+  }
+});
+
+document.getElementById('closeLightbox').addEventListener('click', function() {
+  document.getElementById('lightbox').classList.remove('active');
+});
+
+function openSearch() {
+  document.getElementById('searchOverlay').classList.add('active');
+  document.getElementById('searchInput').focus();
+}
+
+function closeSearch() {
+  document.getElementById('searchOverlay').classList.remove('active');
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchResults').innerHTML = '';
+}
+
+function performSearch() {
+  var query = document.getElementById('searchInput').value.trim().toLowerCase();
+  var results = document.getElementById('searchResults');
+  if (!query) { results.innerHTML = ''; return; }
+  var found = [];
+  for (var i = 0; i < products.length; i++) {
+    if (products[i].name.toLowerCase().indexOf(query) !== -1) found.push(products[i]);
+  }
+  if (found.length === 0) {
+    results.innerHTML = '<p class="no-results">مفيش نتائج للبحث ده</p>';
+    return;
+  }
+  var html = '';
+  for (var j = 0; j < found.length; j++) {
+    var p = found[j];
+    var waMsg = encodeURIComponent('مرحباً VÉLORA،\nعايزة أستفسر عن: ' + p.name);
+    html += '<div class="product">';
+    html += '<div class="product-img-wrap"><img src="' + p.image + '" alt="' + p.name + '" onclick="openLightbox(this.src)"></div>';
+    html += '<div class="info">';
+    html += '<h3>' + p.name + '</h3>';
+    html += '<p class="price">' + p.price + '</p>';
+    html += '<div class="actions">';
+    html += '<button class="add-cart-btn" onclick="addToCart(' + p.id + ')">أضيفي للسلة</button>';
+    html += '<a class="wa-btn" href="https://wa.me/' + WHATSAPP_NUMBER + '?text=' + waMsg + '" target="_blank">💬</a>';
+    html += '</div></div></div>';
+  }
+  results.innerHTML = html;
+}
+function showToast(msg) {
+  var toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  setTimeout(function() { toast.remove(); }, 2000);
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.getElementById('lightbox').classList.remove('active');
+    closeCart();
+    closeSearch();
+  }
+});
+
+renderCategories();
+updateCartCount();
+</script>
+
+</body>
+</html>
